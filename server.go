@@ -12,7 +12,7 @@ func main() {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	var body interface{}
+	var body Body
 	err := json.NewDecoder(r.Body).Decode(&body)
 	if err != nil {
 		panic(err)
