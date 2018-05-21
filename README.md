@@ -92,5 +92,7 @@ Surprisingly Node.js is faster at HTTP and JSON handling.
 
 ![chart](chart.png)
 
+This is a fair comparison as both use almost the same amount of CPU (~100% ±3pp).
+
 We see also that in Go structured JSON is faster.
 You can find more details about this [here](https://github.com/dotchev/go-json-bench).
