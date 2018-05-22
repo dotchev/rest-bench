@@ -2,13 +2,19 @@ package main
 
 import (
 	"encoding/json"
-	"log"
+	"fmt"
 	"net/http"
+	"runtime"
 )
 
 func main() {
-	log.Println("Listening on port 3000")
-	log.Fatal(http.ListenAndServe(":3000", http.HandlerFunc(handler)))
+	fmt.Println("Version:", runtime.Version())
+	fmt.Println("NumCPU:", runtime.NumCPU())
+	fmt.Println("GOMAXPROCS:", runtime.GOMAXPROCS(0))
+
+	fmt.Println("Listening on port 3000")
+	err := http.ListenAndServe(":3000", http.HandlerFunc(handler))
+	fmt.Println(err)
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
