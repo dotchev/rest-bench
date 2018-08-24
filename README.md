@@ -25,7 +25,7 @@ Ubuntu 16.04.4 LTS \n \l
 ```
 CPU: Intel® Core™ i7-7500U CPU @ 2.70GHz × 4
 
-## ingle thread
+## Single thread
 
 ### Node.js
 Start the server
