@@ -53,7 +53,7 @@ Start the server
 $ GOMAXPROCS=1 go run server.go
 2018/05/19 23:45:39 Listening on port 3000
 ```
-To get comparable results we start the go server with `GOMAXPROCS=1` as Node.js executes JavaScript in a single thread. To utilize multiple CPU cores with Node.js you could use the _cluster_ module. Anyway, in the cloud your process usually gets one core or even less.
+To get comparable results we start the go server with `GOMAXPROCS=1` as Node.js executes JavaScript in a single thread.
 
 Run the test in a separate console
 ```
@@ -92,7 +92,7 @@ Transfer/sec:     10.98MB
 ```
 
 ### Results
-Surprisingly Node.js is faster at HTTP and JSON handling.
+Surprisingly Node.js is faster at HTTP and JSON handling. Probably the reason is that most of the work is done in the native (C++) parts of node and V8.
 
 ![chart](chart.png)
 
@@ -185,7 +185,7 @@ Transfer/sec:     13.79MB
 |Req/s| 9078    | 579            | 6209
 
 ## Use all CPU cores
-Here we use all the CPUs on the machine.
+Here we use all the CPUs on the machine - no limits.
 
 ### Node.js
 Start node cluster with one master process + one worker process per CPU
