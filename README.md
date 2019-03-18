@@ -261,8 +261,8 @@ Transfer/sec:     25.04MB
 Here the _java_ process runs at ~360% CPU with ~450MB memory.
 
 ### Results
-|     | Node.js x 4 | Go       | Java   |
-|-----|-------------|----------|--------|
-|Req/s| 21938       | 12740    | 10993  |
+|     | Node.js  | Go       | Java   |
+|-----|----------|----------|--------|
+|Req/s| 21938    | 12740    | 10993  |
 
 ![chart](chart2.png)
