@@ -20,6 +20,11 @@ v10.1.0
 $ go version
 go version go1.10.1 linux/amd64
 
+$ java -version
+java version "11.0.2" 2019-01-15 LTS
+Java(TM) SE Runtime Environment 18.9 (build 11.0.2+9-LTS)
+Java HotSpot(TM) 64-Bit Server VM 18.9 (build 11.0.2+9-LTS, mixed mode)
+
 $ cat /etc/issue
 Ubuntu 16.04.4 LTS \n \l
 ```
@@ -212,7 +217,8 @@ Running 20s test @ http://localhost:3000
 Requests/sec:  21938.23
 Transfer/sec:     48.83MB
 ```
-Here 4 _node_ processes run at ~90% CPU each.
+Here 4 _node_ processes run at ~90% CPU with ~55MB RAM each, 
+i.e. total of ~360% CPU and ~220MB RAM.
 
 ### Go
 ```
@@ -233,10 +239,30 @@ Running 20s test @ http://localhost:3000
 Requests/sec:  12740.96
 Transfer/sec:     28.30MB
 ```
-Here the _server_ process runs at ~360% CPU.
+Here the _server_ process runs at ~360% CPU with ~11MB RAM.
+
+### Java (Spring Boot)
+```
+$ cd java
+$ gradle build
+$ java -jar build/libs/gs-rest-service-0.1.0.jar
+```
+```
+$ wrk -d 20s -s post.lua http://localhost:8080
+Running 20s test @ http://localhost:8080
+  2 threads and 10 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     2.14ms    4.56ms  70.13ms   91.95%
+    Req/Sec     5.52k     1.94k   11.26k    70.00%
+  219991 requests in 20.01s, 501.05MB read
+Requests/sec:  10993.65
+Transfer/sec:     25.04MB
+```
+Here the _java_ process runs at ~360% CPU with ~450MB memory.
 
 ### Results
-|     | Node.js x 4 | Go (unlimited) |
-|-----|-------------|----------------|
-|Req/s| 21938       | 12740          |
+|     | Node.js x 4 | Go       | Java   |
+|-----|-------------|----------|--------|
+|Req/s| 21938       | 12740    | 10993  |
 
+![chart](chart2.png)
