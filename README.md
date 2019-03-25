@@ -1,13 +1,14 @@
 # REST Server Performance
 
-Compare simple REST server performance in Node.js and Go.
+Compare a minimal REST server performance in Node.js, Go and Java. The focus is only on HTTP & JSON as these are mandatory for any REST service.
 
-Both servers do the same - parse the JSON body and return it back in the response.
-No external libraries are used, just the builtin APIs.
+All the servers do the same - parse the JSON body and return it back in the response.
+The goal is to compare performance of the standard libraries that come out of the box, as this is what most projects use in practice. No external libraries are used, just the builtin APIs (except for Java).
 
 Install
 - Node.js
 - Go
+- Java
 - [wrk](https://github.com/wg/wrk)
 
 The POST request is defined in [post.lua](post.lua).
@@ -242,6 +243,7 @@ Transfer/sec:     28.30MB
 Here the _server_ process runs at ~360% CPU with ~11MB RAM.
 
 ### Java (Spring Boot)
+Ok, here we do use an additional library - Spring Boot, which seems to be very popular recently. 
 ```
 $ cd java
 $ gradle build
