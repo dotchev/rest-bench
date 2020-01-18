@@ -201,7 +201,7 @@ Transfer/sec:     13.79MB
 |-----|---------|----------------|------------------
 |Req/s| 9078    | 579            | 6209
 
-## All CPU cores
+## All CPU cores, no limits
 Here we use all the CPUs on the machine - no limits.
 
 ### Node.js
