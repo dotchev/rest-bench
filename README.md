@@ -1,14 +1,19 @@
 # REST Server Performance
 
-Compare a minimal REST server performance in Node.js, Go and Java. The focus is only on HTTP & JSON as these are mandatory for any REST service.
+## Goals
+Compare a minimal REST service performance in Node.js, Go and Java. The focus is only on HTTP & JSON as these are most common for REST APIs.
+
+The goal is to compare performance of the standard libraries that come out of the box, as this is what most projects use in practice. No external libraries are used, just the builtin APIs (except for Java).
+
+## Setup
 
 All the servers do the same - parse the JSON body and return it back in the response.
-The goal is to compare performance of the standard libraries that come out of the box, as this is what most projects use in practice. No external libraries are used, just the builtin APIs (except for Java).
 
 Install
 - Node.js
 - Go
 - Java
+- Docker
 - [wrk](https://github.com/wg/wrk)
 
 The POST request is defined in [post.lua](post.lua).
@@ -63,6 +68,8 @@ $ GOMAXPROCS=1 go run server.go
 ```
 To get comparable results we start the go server with `GOMAXPROCS=1` as Node.js executes JavaScript in a single thread.
 
+**Note** this limits the number of operating system threads that can execute user-level Go code simultaneously. There is no limit to the number of threads that can be blocked in system calls on behalf of Go code; those do not count against the GOMAXPROCS limit. Source https://golang.org/pkg/runtime/.
+
 Run the test in a separate console
 ```
 $ wrk -d 20s -s post.lua http://localhost:3000
@@ -109,8 +116,10 @@ This is a fair comparison as both use almost the same amount of CPU (~100% ±3pp
 We see also that in Go structured JSON is faster.
 You can find more details about this [here](https://github.com/dotchev/go-json-bench).
 
-## Run in Docker
-As an alternative here we run each server in a docker container limited to one CPU.
+## Single core, unlimited threads
+Many people commented that the limiting GOMAXPROCS is unfair to Go, so here we run the test without such limits but limit the actual resources available to the process.
+
+Here we run each server in a docker container limited to one CPU.
 This way we ensure both servers have equal resources.
 
 ### Node
@@ -192,7 +201,7 @@ Transfer/sec:     13.79MB
 |-----|---------|----------------|------------------
 |Req/s| 9078    | 579            | 6209
 
-## Use all CPU cores
+## All CPU cores
 Here we use all the CPUs on the machine - no limits.
 
 ### Node.js
@@ -245,7 +254,10 @@ Transfer/sec:     28.30MB
 Here the _server_ process runs at ~360% CPU with ~11MB RAM.
 
 ### Java (Spring Boot)
-Ok, here we do use an additional library - Spring Boot, which seems to be very popular recently. 
+Ok, here we do use an additional library - Spring Boot, which seems to be very popular recently.
+
+Here we add Java just to get a rough idea how it compares against Node and Go.
+
 ```
 $ cd java
 $ gradle build
